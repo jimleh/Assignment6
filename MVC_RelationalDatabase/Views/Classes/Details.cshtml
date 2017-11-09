@@ -18,7 +18,13 @@
             @Html.DisplayFor(model => model.ClassName)
         </dd>
 
+
     </dl>
+    @foreach (var t in Model.Teachers)
+    {
+        <br />
+            @Html.DisplayName(t.TeacherName);
+    }
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ClassID }) |

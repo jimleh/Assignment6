@@ -42,20 +42,47 @@ namespace MVC_RelationalDatabase.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            var teacherVM = repo.GetCreateTeacherViewModel();
-            return View(teacherVM);
+            var vm = repo.GetCreateTeacherViewModel();
+            return View(vm);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="TeacherID, TeacherName")] CreateTeacherViewModel teacherVM)
+        public ActionResult Create([Bind(Include="TeacherID, TeacherName")] CreateTeacherViewModel vm)
         {
             if(ModelState.IsValid)
             {
-                repo.AddTeacher(teacherVM);
+                repo.AddTeacher(vm);
                 return RedirectToAction("Index");
             }
-            return View(teacherVM);
+            return View(vm);
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var vm = repo.GetEditTeacherViewModel(id.Value);
+            if (vm == null)
+            {
+                return HttpNotFound();
+            }
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Teacher, Classes, Selected")] EditTeacherViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                repo.EditTeacher(vm);
+                return RedirectToAction("Index");
+            }
+            return View(vm);
         }
     }
 }

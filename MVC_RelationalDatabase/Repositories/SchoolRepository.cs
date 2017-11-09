@@ -55,17 +55,6 @@ namespace MVC_RelationalDatabase.Repositories
             vm.Classes = new SelectList(GetAllClasses(), "ClassID", "ClassName");
             return vm;
         }
-        public CreateStudentViewModel GetCreateStudentViewModel(int id) // Overlaoded version
-        {
-            var student = GetStudent(id);
-            if (student == null)
-            {
-                return null;
-            }
-            var vm = new CreateStudentViewModel(student);
-            vm.Classes = new SelectList(GetAllClasses(), "ClassID", "ClassName");
-            return vm;
-        }
         public EditStudentViewModel GetEditStudentViewModel(int id)
         {
             var student = GetStudent(id);
@@ -90,6 +79,16 @@ namespace MVC_RelationalDatabase.Repositories
                 return null;
             }
             var vm = new EditTeacherViewModel(teacher);
+            vm.Classes = GetAllClasses();
+            vm.Selected = new bool[vm.Classes.Count()];
+            for(int i = 0; i < vm.Classes.Count(); i++)
+            {
+                if(vm.Teacher.Classes.Contains(vm.Classes.ElementAt(i)))
+                {
+                    vm.Selected[i] = true;
+                }
+
+            }
             return vm;
         }
 
@@ -139,17 +138,28 @@ namespace MVC_RelationalDatabase.Repositories
         }
         public void EditTeacher(EditTeacherViewModel vm)
         {
-            var all = GetAllClasses();
-            vm.Selected = new bool[all.Count()];
-            var tmp = new List<Class>();
-            for(int i = 0; i < all.Count(); i++)
+            var classes = GetAllClasses();
+            var teacher = GetTeacher(vm.Teacher.TeacherID);
+            teacher.Classes = new List<Class>();
+            for(int i = 0; i < classes.Count(); i++)
             {
                 if(vm.Selected[i])
                 {
-                    tmp.Add(all.ElementAt(i));
+                    teacher.Classes.Add(classes.ElementAt(i));
+                }
+                else
+                {
+                    var _class = classes.ElementAt(i);
+                    if(_class.Teachers.Contains(teacher))
+                    {
+                        _class.Teachers.Remove(teacher);
+                        context.Entry(_class).State = System.Data.Entity.EntityState.Modified;
+                    }
                 }
             }
-            var teacher = vm.ToTeacher();
+            teacher.TeacherEmail = vm.Teacher.TeacherEmail;
+            teacher.TeacherName = vm.Teacher.TeacherName;
+            teacher.TeacherPhone = vm.Teacher.TeacherPhone;
 
             context.Entry(teacher).State = System.Data.Entity.EntityState.Modified;
             Save();
@@ -159,7 +169,5 @@ namespace MVC_RelationalDatabase.Repositories
             context.Teachers.Remove(teacher);
             Save();
         }
-
-
     }
 }

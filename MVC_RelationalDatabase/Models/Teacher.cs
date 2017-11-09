@@ -18,6 +18,11 @@ namespace MVC_RelationalDatabase.Models
         [DisplayName("Phone")]
         public string TeacherPhone { get; set; }
 
+        public Teacher()
+        {
+            Classes = new List<Class>();
+        }
+
         public virtual ICollection<Class> Classes { get; set; }
     }
 }

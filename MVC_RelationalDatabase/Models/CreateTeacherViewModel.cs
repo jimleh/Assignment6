@@ -13,11 +13,6 @@ namespace MVC_RelationalDatabase.Models
         [Required, DisplayName("Name:")]
         public string TeacherName { get; set; }
 
-        public CreateTeacherViewModel()
-        {
-
-        }
-
         public Teacher ToTeacher()
         {
             return new Teacher { TeacherID = this.TeacherID, Classes = new List<Class>(), TeacherName = this.TeacherName };

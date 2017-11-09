@@ -1,11 +1,11 @@
 namespace MVC_RelationalDatabase.Migrations
 {
     using MVC_RelationalDatabase.Models;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Linq;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<MVC_RelationalDatabase.DataAccess.SchoolContext>
     {

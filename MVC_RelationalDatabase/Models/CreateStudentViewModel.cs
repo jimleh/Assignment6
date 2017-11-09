@@ -18,19 +18,6 @@ namespace MVC_RelationalDatabase.Models
         public int ClassID { get; set; }
         public IEnumerable<SelectListItem> Classes { get; set; }
 
-        public CreateStudentViewModel()
-        {
-            //Classes = new List<Class>();
-            // Nothing here yet
-        }
-
-        public CreateStudentViewModel(Student student)
-        {
-            StudentID = student.StudentID;
-            StudentName = student.StudentName;
-            ClassID = student.ClassID;
-        }
-
         public Student ToStudent()
         {
             return new Student { StudentID = this.StudentID, StudentName = this.StudentName, ClassID = this.ClassID };

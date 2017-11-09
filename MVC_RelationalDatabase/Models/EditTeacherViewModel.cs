@@ -9,21 +9,21 @@ namespace MVC_RelationalDatabase.Models
 {
     public class EditTeacherViewModel
     {
-        public int TeacherID { get; set; }
-        [Required, DisplayName("Name:")]
-        public string TeacherName { get; set; }
+        public Teacher Teacher { get; set; }
 
         public IEnumerable<Class> Classes { get; set; }
         public bool[] Selected { get; set; }
 
-        public EditTeacherViewModel()
+        public EditTeacherViewModel() {}
+
+        public EditTeacherViewModel(Teacher teacher)
         {
-            Classes = new List<Class>();
+            Teacher = teacher;
         }
 
         public Teacher ToTeacher()
         {
-            return new Teacher { TeacherID = this.TeacherID, Classes = this.Classes.ToList(), TeacherName = this.TeacherName };
+            return Teacher;
         }
     }
 }

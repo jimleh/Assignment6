@@ -13,9 +13,7 @@ namespace MVC_RelationalDatabase.Models
         public Student Student {get; set; }
         public IEnumerable<SelectListItem> Classes { get; set; }
 
-        public EditStudentViewModel()
-        {
-        }
+        public EditStudentViewModel() {}
 
         public EditStudentViewModel(Student student)
         {

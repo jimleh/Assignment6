@@ -14,6 +14,11 @@ namespace MVC_RelationalDatabase.Models
         [Required, DisplayName("Class")]
         public string ClassName { get; set; }
 
+        public Class()
+        {
+            Teachers = new List<Teacher>();
+        }
+
         public virtual ICollection<Teacher> Teachers { get; set; }
     }
 }

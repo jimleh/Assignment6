@@ -49,14 +49,14 @@ namespace MVC_RelationalDatabase.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "StudentID, StudentName, ClassID")] CreateStudentViewModel studentVM)
+        public ActionResult Create([Bind(Include = "StudentID, StudentName, ClassID")] CreateStudentViewModel vm)
         {
             if(ModelState.IsValid)
             {
-                repo.AddStudent(studentVM);
+                repo.AddStudent(vm);
                 return RedirectToAction("Index");
             }
-            return View(studentVM);
+            return View(vm);
         }
 
         [HttpGet]
@@ -67,25 +67,25 @@ namespace MVC_RelationalDatabase.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var studentVM = repo.GetEditStudentViewModel(id.Value);
-            if (studentVM == null)
+            var vm = repo.GetEditStudentViewModel(id.Value);
+            if (vm == null)
             {
                 return HttpNotFound();
             }
 
-            return View(studentVM);
+            return View(vm);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Student")] EditStudentViewModel studentVM)
+        public ActionResult Edit([Bind(Include = "Student")] EditStudentViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                repo.EditStudent(studentVM);
+                repo.EditStudent(vm);
                 return RedirectToAction("Index");
             }
-            return View(studentVM);
+            return View(vm);
         }
 
         [HttpGet]
