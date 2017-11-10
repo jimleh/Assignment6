@@ -138,6 +138,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\SchoolRepository.cs" />
     <Compile Include="ViewModels\DetailsClassViewModel.cs" />
+    <Compile Include="ViewModels\DetailsStudentViewModel.cs" />
+    <Compile Include="ViewModels\DetailsTeacherViewModel.cs" />
     <Compile Include="ViewModels\EditClassViewModel.cs" />
     <Compile Include="ViewModels\CreateStudentViewModel.cs" />
     <Compile Include="ViewModels\CreateTeacherViewModel.cs" />
@@ -188,7 +190,6 @@
     <Content Include="Views\Students\Delete.cshtml" />
     <Content Include="Views\Classes\Index.cshtml" />
     <Content Include="Views\Teachers\Index.cshtml" />
-    <Content Include="Views\Teachers\Details.cshtml" />
     <Content Include="Views\Classes\Details.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ClassTeachers.cshtml" />
     <Content Include="Views\Classes\Create.cshtml" />
@@ -197,6 +198,7 @@
     <Content Include="Views\Teachers\Edit.cshtml" />
     <Content Include="Views\Teachers\Delete.cshtml" />
     <Content Include="Views\Classes\Delete.cshtml" />
+    <Content Include="Views\Teachers\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

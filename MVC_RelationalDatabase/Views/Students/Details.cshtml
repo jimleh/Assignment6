@@ -1,4 +1,4 @@
-﻿@model MVC_RelationalDatabase.Models.Student
+﻿@model MVC_RelationalDatabase.ViewModels.DetailsStudentViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -11,40 +11,48 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.StudentName)
+            @Html.DisplayNameFor(model => model.Student.StudentName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.StudentName)
+            @Html.DisplayFor(model => model.Student.StudentName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.StudentEmail)
+            @Html.DisplayNameFor(model => model.Student.StudentEmail)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.StudentEmail)
+            @Html.DisplayFor(model => model.Student.StudentEmail)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.StudentPhone)
+            @Html.DisplayNameFor(model => model.Student.StudentPhone)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.StudentPhone)
+            @Html.DisplayFor(model => model.Student.StudentPhone)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Class.ClassName)
+            @Html.DisplayNameFor(model => model.Student.Class.ClassName)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.Class.ClassName)
+            @Html.ActionLink(Model.Student.Class.ClassName, "Details", "Classes", new { id = Model.Student.ClassID }, htmlAttributes: null)
         </dd>
 
     </dl>
+    <h4>Teachers</h4>
+    <ul class="list-unstyled"
+    @foreach(var t in Model.Teachers)
+    {
+        <li>
+            @Html.ActionLink(t.TeacherName, "Details", "Teachers", new { id = t.TeacherID }, htmlAttributes: null)
+        </li>
+    }
+    </ul>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.StudentID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Student.StudentID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

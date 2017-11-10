@@ -24,19 +24,34 @@ namespace MVC_RelationalDatabase.Controllers
             return View(repo.GetIndexTeacherViewModels());
         }
 
+        //[HttpGet]
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    var teacher = repo.GetTeacher(id.Value);
+        //    if (teacher == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(teacher);
+        //}
+
         [HttpGet]
         public ActionResult Details(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var teacher = repo.GetTeacher(id.Value);
-            if(teacher == null)
+            var vm = repo.GetDetailsTeacherViewModel(id.Value);
+            if (vm == null)
             {
                 return HttpNotFound();
             }
-            return View(teacher);
+            return View(vm);
         }
 
         [HttpGet]

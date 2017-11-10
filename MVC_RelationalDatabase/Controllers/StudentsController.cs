@@ -33,13 +33,13 @@ namespace MVC_RelationalDatabase.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var student = repo.GetStudent(id.Value);
-            if(student == null)
+            var vm = repo.GetDetailsStudentViewModel(id.Value);
+            if (vm == null)
             {
                 return HttpNotFound();
             }
 
-            return View(student);
+            return View(vm);
         }
 
         [HttpGet]

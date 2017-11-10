@@ -61,6 +61,25 @@ namespace MVC_RelationalDatabase.Repositories
 
             return vm;
         }
+        public DetailsStudentViewModel GetDetailsStudentViewModel(int id)
+        {
+            var student = GetStudent(id);
+
+            if (student == null)
+            {
+                return null;
+            }
+
+            var teachers = GetAllTeachers().Where(t => t.Classes.Any(c => c.ClassID == student.ClassID));
+
+            var vm = new DetailsStudentViewModel
+            {
+                Student = student,
+                Teachers = teachers
+            };
+
+            return vm;
+        }
         public EditStudentViewModel GetEditStudentViewModel(int id)
         {
             var student = GetStudent(id);
@@ -105,6 +124,25 @@ namespace MVC_RelationalDatabase.Repositories
             var vm = new CreateTeacherViewModel();
             return vm;
         }
+        public DetailsTeacherViewModel GetDetailsTeacherViewModel(int id)
+        {
+            var teacher = GetTeacher(id);
+
+            if (teacher == null)
+            {
+                return null;
+            }
+
+            var students = GetAllStudents().Where(s => teacher.Classes.Any(c => c.ClassID == s.ClassID));
+
+            var vm = new DetailsTeacherViewModel
+            {
+                Teacher = teacher,
+                Students = students
+            };
+
+            return vm;
+        }
         public EditTeacherViewModel GetEditTeacherViewModel(int id)
         {
             var teacher = GetTeacher(id);
@@ -133,10 +171,7 @@ namespace MVC_RelationalDatabase.Repositories
                         NumberOfClasses = t.Classes.Count,
                         NumberOfStudents = 0
                 };
-                foreach (var c in t.Classes)
-                {
-                    vm.NumberOfStudents += GetAllStudents().Where(s => s.ClassID == c.ClassID).Count();
-                }
+                vm.NumberOfStudents += GetAllStudents().Where(s => t.Classes.Any(c => c.ClassID == s.ClassID)).Count();
                 models.Add(vm);
             }
             return models;

@@ -24,7 +24,7 @@
         @foreach (var t in Model.Class.Teachers)
         {
             <li>
-                @Html.DisplayName(t.TeacherName)
+                @Html.ActionLink(t.TeacherName, "Details", "Teachers", new { id = t.TeacherID }, htmlAttributes: null)
             </li>
         }
     </ul>
@@ -33,7 +33,7 @@
         @foreach (var s in Model.Students)
         {
             <li>
-                @Html.DisplayName(s.StudentName)
+                @Html.ActionLink(s.StudentName, "Details", "Students", new { id = s.StudentID }, htmlAttributes: null)
             </li>
         }
         </ul>

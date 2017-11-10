@@ -1,4 +1,4 @@
-﻿@model MVC_RelationalDatabase.Models.Teacher
+﻿@model MVC_RelationalDatabase.ViewModels.DetailsTeacherViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -11,42 +11,51 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.TeacherName)
+            @Html.DisplayNameFor(model => model.Teacher.TeacherName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TeacherName)
+            @Html.DisplayFor(model => model.Teacher.TeacherName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TeacherEmail)
+            @Html.DisplayNameFor(model => model.Teacher.TeacherEmail)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TeacherEmail)
+            @Html.DisplayFor(model => model.Teacher.TeacherEmail)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TeacherPhone)
+            @Html.DisplayNameFor(model => model.Teacher.TeacherPhone)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TeacherPhone)
+            @Html.DisplayFor(model => model.Teacher.TeacherPhone)
         </dd>
 
     </dl>
 	<hr/>
     <h4>Classes</h4>
     <ul class="list-unstyled">
-        @foreach (var c in Model.Classes)
+        @foreach (var c in Model.Teacher.Classes)
         {
             <li>
-                @Html.DisplayName(c.ClassName)
+                @Html.ActionLink(c.ClassName, "Details", "Classes", new { id = c.ClassID }, htmlAttributes: null)
+            </li>
+        }
+    </ul>
+    <h4>Students</h4>
+    <ul class="list-unstyled">
+        @foreach (var s in Model.Students)
+        {
+            <li>                
+                @Html.ActionLink(s.StudentName, "Details", "Students", new { id = s.StudentID }, htmlAttributes: null)
             </li>
         }
     </ul>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.TeacherID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Teacher.TeacherID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
