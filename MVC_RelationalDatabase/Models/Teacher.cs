@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace MVC_RelationalDatabase.Models
 {
@@ -11,11 +7,11 @@ namespace MVC_RelationalDatabase.Models
     {
         [Key]
         public int TeacherID { get; set; }
-        [Required, DisplayName("Name")]
+        [Required, Display(Name = "Name:")]
         public string TeacherName { get; set; }
-        [DisplayName("Email")]
+        [Display(Name = "Email:")]
         public string TeacherEmail { get; set; }
-        [DisplayName("Phone")]
+        [Display(Name = "Phone:")]
         public string TeacherPhone { get; set; }
 
         public Teacher()

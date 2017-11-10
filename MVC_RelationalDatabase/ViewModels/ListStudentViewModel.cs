@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MVC_RelationalDatabase.Models
+namespace MVC_RelationalDatabase.ViewModels
 {
     public class ListStudentViewModel
     {

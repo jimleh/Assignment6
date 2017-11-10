@@ -1,5 +1,6 @@
 ﻿using MVC_RelationalDatabase.DataAccess;
 using MVC_RelationalDatabase.Models;
+using MVC_RelationalDatabase.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,10 +50,14 @@ namespace MVC_RelationalDatabase.Repositories
         {
             return context.Teachers.FirstOrDefault(t => t.TeacherID == id);
         }
+        // Get ViewModel- methods
         public CreateStudentViewModel GetCreateStudentViewModel()
         {
-            var vm = new CreateStudentViewModel();
-            vm.Classes = new SelectList(GetAllClasses(), "ClassID", "ClassName");
+            var vm = new CreateStudentViewModel
+            {
+                Classes = new SelectList(GetAllClasses(), "ClassID", "ClassName")
+            };
+
             return vm;
         }
         public EditStudentViewModel GetEditStudentViewModel(int id)
@@ -62,8 +67,13 @@ namespace MVC_RelationalDatabase.Repositories
             {
                 return null;
             }
-            var vm = new EditStudentViewModel(student);
-            vm.Classes = new SelectList(GetAllClasses(), "ClassID", "ClassName");
+
+            var vm = new EditStudentViewModel
+            {
+                Student = student,
+                Classes = new SelectList(GetAllClasses(), "ClassID", "ClassName")
+            };
+
             return vm;
         }
         public CreateTeacherViewModel GetCreateTeacherViewModel()
@@ -74,13 +84,21 @@ namespace MVC_RelationalDatabase.Repositories
         public EditTeacherViewModel GetEditTeacherViewModel(int id)
         {
             var teacher = GetTeacher(id);
+
             if (teacher == null)
             {
                 return null;
             }
-            var vm = new EditTeacherViewModel(teacher);
-            vm.Classes = GetAllClasses();
-            vm.Selected = new bool[vm.Classes.Count()];
+
+            var classes = GetAllClasses();
+
+            var vm = new EditTeacherViewModel
+            {
+                Teacher = teacher,
+                Classes = classes,
+                Selected = new bool[classes.Count()]
+            };
+
             for(int i = 0; i < vm.Classes.Count(); i++)
             {
                 if(vm.Teacher.Classes.Contains(vm.Classes.ElementAt(i)))
@@ -101,7 +119,7 @@ namespace MVC_RelationalDatabase.Repositories
         }
         public void EditStudent(EditStudentViewModel studentVM)
         {
-            var student = studentVM.ToStudent();
+            var student = studentVM.Student;
             context.Entry(student).State = System.Data.Entity.EntityState.Modified;
             Save();
         }

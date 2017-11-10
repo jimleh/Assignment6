@@ -1,4 +1,4 @@
-﻿using MVC_RelationalDatabase.Models;
+﻿using MVC_RelationalDatabase.ViewModels;
 using MVC_RelationalDatabase.Repositories;
 using System;
 using System.Collections.Generic;
@@ -75,7 +75,7 @@ namespace MVC_RelationalDatabase.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Teacher, Classes, Selected")] EditTeacherViewModel vm)
+        public ActionResult Edit([Bind(Include = "Teacher, Selected")] EditTeacherViewModel vm)
         {
             if (ModelState.IsValid)
             {
@@ -83,6 +83,30 @@ namespace MVC_RelationalDatabase.Controllers
                 return RedirectToAction("Index");
             }
             return View(vm);
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var teacher = repo.GetTeacher(id.Value);
+            if (teacher == null)
+            {
+                return HttpNotFound();
+            }
+            return View(teacher);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var teacher = repo.GetTeacher(id);
+            repo.RemoveTeacher(teacher);
+            return RedirectToAction("Index");
         }
     }
 }
