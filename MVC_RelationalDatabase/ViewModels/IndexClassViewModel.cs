@@ -6,10 +6,14 @@ using System.Web;
 
 namespace MVC_RelationalDatabase.ViewModels
 {
-    public class CreateClassViewModel
+    public class IndexClassViewModel
     {
         public int ClassID { get; set; }
-        [Required, Display(Name = "Name")]
+        [Display(Name = "Class")]
         public string ClassName { get; set; }
+        [Display(Name = "Teachers")]
+        public int NumberOfTeachers { get; set; }
+        [Display(Name = "Students")]
+        public int NumberOfStudents { get; set; }
     }
 }

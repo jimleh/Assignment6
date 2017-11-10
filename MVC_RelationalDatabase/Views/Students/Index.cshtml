@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MVC_RelationalDatabase.Models.Student>
+﻿@model IEnumerable<MVC_RelationalDatabase.ViewModels.IndexStudentViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -12,10 +12,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Class.ClassName)
+            @Html.DisplayNameFor(model => model.StudentName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.StudentName)
+            @Html.DisplayNameFor(model => model.ClassName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfTeachers)
         </th>
         <th></th>
     </tr>
@@ -23,10 +26,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Class.ClassName)
+            @Html.DisplayFor(modelItem => item.StudentName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.StudentName)
+            @Html.DisplayFor(modelItem => item.ClassName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfTeachers)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.StudentID }) |

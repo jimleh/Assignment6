@@ -1,4 +1,4 @@
-﻿@model MVC_RelationalDatabase.Models.Class
+﻿@model MVC_RelationalDatabase.ViewModels.DetailsClassViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -11,22 +11,34 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ClassName)
+            @Html.DisplayNameFor(model => model.Class.ClassName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ClassName)
+            @Html.DisplayFor(model => model.Class.ClassName)
         </dd>
-
-
     </dl>
-    @foreach (var t in Model.Teachers)
-    {
-        <br />
-            @Html.DisplayName(t.TeacherName);
-    }
+    <h4>Teachers</h4>
+
+    <ul class="list-unstyled">
+        @foreach (var t in Model.Class.Teachers)
+        {
+            <li>
+                @Html.DisplayName(t.TeacherName)
+            </li>
+        }
+    </ul>
+    <h4>Students</h4>
+    <ul class="list-unstyled">
+        @foreach (var s in Model.Students)
+        {
+            <li>
+                @Html.DisplayName(s.StudentName)
+            </li>
+        }
+        </ul>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ClassID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Class.ClassID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

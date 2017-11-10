@@ -50,7 +50,8 @@ namespace MVC_RelationalDatabase.Repositories
         {
             return context.Teachers.FirstOrDefault(t => t.TeacherID == id);
         }
-        // Get ViewModel- methods
+
+        // Student ViewModels
         public CreateStudentViewModel GetCreateStudentViewModel()
         {
             var vm = new CreateStudentViewModel
@@ -76,6 +77,29 @@ namespace MVC_RelationalDatabase.Repositories
 
             return vm;
         }
+        public IEnumerable<IndexStudentViewModel> GetIndexStudentViewModels()
+        {
+            var models = new List<IndexStudentViewModel>();
+            foreach(var s in GetAllStudents())
+            {
+                var vm = new IndexStudentViewModel
+                {
+                    StudentID = s.StudentID,
+                    StudentName = s.StudentName,
+                    ClassName = GetAllClasses().FirstOrDefault(c => c.ClassID == s.ClassID).ClassName,
+                    NumberOfTeachers = 0
+                };
+                foreach (var t in GetAllTeachers())
+                {
+                    vm.NumberOfTeachers += t.Classes.Where(c => c.ClassID == s.ClassID).Count();
+                }
+                
+                models.Add(vm);
+            }
+            return models;
+        }
+
+        // Teacher ViewModels
         public CreateTeacherViewModel GetCreateTeacherViewModel()
         {
             var vm = new CreateTeacherViewModel();
@@ -90,24 +114,94 @@ namespace MVC_RelationalDatabase.Repositories
                 return null;
             }
 
-            var classes = GetAllClasses();
-
             var vm = new EditTeacherViewModel
             {
-                Teacher = teacher,
-                Classes = classes,
-                Selected = new bool[classes.Count()]
+                Teacher = teacher
             };
 
-            for(int i = 0; i < vm.Classes.Count(); i++)
+            return vm;
+        }
+        public IEnumerable<IndexTeacherViewModel> GetIndexTeacherViewModels()
+        {
+            var models = new List<IndexTeacherViewModel>();
+            foreach (var t in GetAllTeachers())
             {
-                if(vm.Teacher.Classes.Contains(vm.Classes.ElementAt(i)))
+                var vm = new IndexTeacherViewModel
+                {
+                        TeacherID = t.TeacherID,
+                        TeacherName = t.TeacherName,
+                        NumberOfClasses = t.Classes.Count,
+                        NumberOfStudents = 0
+                };
+                foreach (var c in t.Classes)
+                {
+                    vm.NumberOfStudents += GetAllStudents().Where(s => s.ClassID == c.ClassID).Count();
+                }
+                models.Add(vm);
+            }
+            return models;
+        }
+
+        // Class ViewModels
+        public DetailsClassViewModel GetDetailsClassViewModel(int id)
+        {
+            var _class = GetClass(id);
+            if (_class == null)
+            {
+                return null;
+            }
+
+            var vm = new DetailsClassViewModel
+            {
+                Class = _class,
+                Students = GetAllStudents().Where(s => s.ClassID == id)
+            };
+
+            return vm;
+        }
+        public EditClassViewModel GetEditClassViewModel(int id)
+        {
+            var _class = GetClass(id);
+            if(_class == null)
+            {
+                return null;
+            }
+
+            var teachers = GetAllTeachers();
+
+            var vm = new EditClassViewModel
+            {
+                Class = _class,
+                Teachers = teachers,
+                Selected = new bool[teachers.Count()]
+            };
+
+            for (int i = 0; i < vm.Teachers.Count(); i++)
+            {
+                if (vm.Class.Teachers.Contains(vm.Teachers.ElementAt(i)))
                 {
                     vm.Selected[i] = true;
                 }
-
             }
+
             return vm;
+        }
+        public IEnumerable<IndexClassViewModel> GetIndexClassViewModels()
+        {
+            var models = new List<IndexClassViewModel>();
+            foreach(var c in GetAllClasses())
+            {
+                models.Add(
+                    new IndexClassViewModel 
+                    { 
+                        ClassID = c.ClassID,
+                        ClassName = c.ClassName,
+                        NumberOfStudents = GetAllStudents().Where(s => s.ClassID == c.ClassID).Count(),
+                        NumberOfTeachers = c.Teachers.Count
+                    }
+                );
+            }
+            return models;
         }
 
         // Add, Edit, and Delete Student methods
@@ -136,8 +230,29 @@ namespace MVC_RelationalDatabase.Repositories
             context.Classes.Add(_class);
             Save();
         }
-        public void EditClass(Class _class)
+        public void EditClass(EditClassViewModel vm)
         {
+            var teachers = GetAllTeachers();
+            var _class = GetClass(vm.Class.ClassID);
+            _class.Teachers = new List<Teacher>();
+            for (int i = 0; i < teachers.Count(); i++)
+            {
+                if (vm.Selected[i])
+                {
+                    _class.Teachers.Add(teachers.ElementAt(i));
+                }
+                else
+                {
+                    var teacher = teachers.ElementAt(i);
+                    if (teacher.Classes.Contains(_class))
+                    {
+                        teacher.Classes.Remove(_class);
+                        context.Entry(teacher).State = System.Data.Entity.EntityState.Modified;
+                    }
+                }
+            }
+            _class.ClassName = vm.Class.ClassName;
+
             context.Entry(_class).State = System.Data.Entity.EntityState.Modified;
             Save();
         }
@@ -156,29 +271,7 @@ namespace MVC_RelationalDatabase.Repositories
         }
         public void EditTeacher(EditTeacherViewModel vm)
         {
-            var classes = GetAllClasses();
-            var teacher = GetTeacher(vm.Teacher.TeacherID);
-            teacher.Classes = new List<Class>();
-            for(int i = 0; i < classes.Count(); i++)
-            {
-                if(vm.Selected[i])
-                {
-                    teacher.Classes.Add(classes.ElementAt(i));
-                }
-                else
-                {
-                    var _class = classes.ElementAt(i);
-                    if(_class.Teachers.Contains(teacher))
-                    {
-                        _class.Teachers.Remove(teacher);
-                        context.Entry(_class).State = System.Data.Entity.EntityState.Modified;
-                    }
-                }
-            }
-            teacher.TeacherEmail = vm.Teacher.TeacherEmail;
-            teacher.TeacherName = vm.Teacher.TeacherName;
-            teacher.TeacherPhone = vm.Teacher.TeacherPhone;
-
+            var teacher = vm.Teacher;
             context.Entry(teacher).State = System.Data.Entity.EntityState.Modified;
             Save();
         }

@@ -121,32 +121,33 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClassesController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
-    <Compile Include="Controllers\StudentsAutomaticController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="DataAccess\SchoolContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201711091256054_Initial.cs" />
-    <Compile Include="Migrations\201711091256054_Initial.Designer.cs">
-      <DependentUpon>201711091256054_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201711100814194_initial.cs" />
+    <Compile Include="Migrations\201711100814194_initial.Designer.cs">
+      <DependentUpon>201711100814194_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Class.cs" />
-    <Compile Include="Models\CreateTeacherViewModel.cs" />
-    <Compile Include="Models\EditStudentViewModel.cs" />
-    <Compile Include="Models\EditTeacherViewModel.cs" />
     <Compile Include="Models\Student.cs" />
-    <Compile Include="Models\ListStudentViewModel.cs" />
     <Compile Include="Models\Teacher.cs" />
-    <Compile Include="Models\CreateStudentViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\SchoolRepository.cs" />
+    <Compile Include="ViewModels\DetailsClassViewModel.cs" />
+    <Compile Include="ViewModels\EditClassViewModel.cs" />
+    <Compile Include="ViewModels\CreateStudentViewModel.cs" />
+    <Compile Include="ViewModels\CreateTeacherViewModel.cs" />
+    <Compile Include="ViewModels\EditStudentViewModel.cs" />
+    <Compile Include="ViewModels\EditTeacherViewModel.cs" />
+    <Compile Include="ViewModels\IndexClassViewModel.cs" />
+    <Compile Include="ViewModels\IndexStudentViewModel.cs" />
+    <Compile Include="ViewModels\IndexTeacherViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\SchoolDB.mdf" />
-    <Content Include="App_Data\SchoolDB_log.ldf" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -180,11 +181,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\StudentsAutomatic\Create.cshtml" />
-    <Content Include="Views\StudentsAutomatic\Delete.cshtml" />
-    <Content Include="Views\StudentsAutomatic\Details.cshtml" />
-    <Content Include="Views\StudentsAutomatic\Edit.cshtml" />
-    <Content Include="Views\StudentsAutomatic\Index.cshtml" />
     <Content Include="Views\Students\Create.cshtml" />
     <Content Include="Views\Students\Index.cshtml" />
     <Content Include="Views\Students\Edit.cshtml" />
@@ -195,8 +191,16 @@
     <Content Include="Views\Teachers\Details.cshtml" />
     <Content Include="Views\Classes\Details.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ClassTeachers.cshtml" />
+    <Content Include="Views\Classes\Create.cshtml" />
+    <Content Include="Views\Classes\Edit.cshtml" />
+    <Content Include="Views\Teachers\Create.cshtml" />
+    <Content Include="Views\Teachers\Edit.cshtml" />
+    <Content Include="Views\Teachers\Delete.cshtml" />
+    <Content Include="Views\Classes\Delete.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -205,8 +209,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711091256054_Initial.resx">
-      <DependentUpon>201711091256054_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201711100814194_initial.resx">
+      <DependentUpon>201711100814194_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

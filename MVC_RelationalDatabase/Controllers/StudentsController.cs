@@ -22,7 +22,7 @@ namespace MVC_RelationalDatabase.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View(repo.GetAllStudents());
+            return View(repo.GetIndexStudentViewModels());
         }
 
         [HttpGet]

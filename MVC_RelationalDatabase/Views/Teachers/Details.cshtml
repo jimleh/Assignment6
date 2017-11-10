@@ -36,11 +36,15 @@
 
     </dl>
 	<hr/>
-	@foreach(var c in Model.Classes)
-	{
-		@Html.DisplayName(c.ClassName)
-		<br/>
-	}
+    <h4>Classes</h4>
+    <ul class="list-unstyled">
+        @foreach (var c in Model.Classes)
+        {
+            <li>
+                @Html.DisplayName(c.ClassName)
+            </li>
+        }
+    </ul>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.TeacherID }) |

@@ -13,7 +13,7 @@ namespace MVC_RelationalDatabase.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201711091801286_initial"; }
+            get { return "201711100814194_initial"; }
         }
         
         string IMigrationMetadata.Source
